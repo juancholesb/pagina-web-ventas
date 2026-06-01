@@ -3,261 +3,284 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CBflow Tech — Vapers & E-Cigs</title>
+  <title>CBflow Tech — Premium Vapers & Futuristic Technology</title>
+  <meta name="description" content="Siente el vapor premium con CBflow Tech. Vapers desechables, Pod Systems, e-liquids de alta gama y la tecnología del futuro en Colombia. Envíos express en Santa Marta y a todo el país."/>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Urbanist:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Urbanist:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-
-<canvas id="smoke-canvas"></canvas>
-
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
-
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
-  <div class="nav-logo">
-    <span class="logo-icon">💨</span>
-    <span class="logo-name">CB<span class="acc">flow</span></span>
-    <span class="logo-sub">TECH</span>
+  <!-- HUMO SENSORIZADO INTERACTIVO -->
+  <canvas id="smoke-canvas"></canvas>
+  <!-- FLUID GLOWING CURSOR -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo" id="nav-logo">
+      <span class="logo-icon">💨</span>
+      <span class="logo-name">CB<span class="acc">flow</span></span>
+      <span class="logo-sub">TECH</span>
+    </div>
+    
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#inicio" id="link-inicio">Inicio</a></li>
+      <li><a href="#productos" id="link-productos">Productos</a></li>
+      <li><a href="#marcas" id="link-marcas">Marcas</a></li>
+      <li><a href="#contacto" id="link-contacto">Contacto</a></li>
+    </ul>
+    
+    <div class="nav-right">
+      <button class="cart-btn" id="cart-toggle" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span id="cart-count" class="cart-badge">0</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menú móvil">☰</button>
+    </div>
+  </nav>
+  <!-- HERO SECTION -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="hero-eyebrow">⚡ Los mejores vapers & tech de Colombia</div>
+      <h1 class="hero-h1">
+        <span>SIENTE EL</span>
+        <span class="hero-big">VAPOR</span>
+      </h1>
+      <p class="hero-p">Dispositivos premium, sabores intensos, y lo último en innovación tecnológica. Envíos express garantizados a todo el país.</p>
+      
+      <div class="hero-ctas">
+        <a href="#productos" class="cta-main" id="cta-catalogo">Explorar Catálogo</a>
+        <a href="https://wa.me/573052267408?text=Hola%20CBflow%20Tech%2C%20quiero%20info%20sobre%20vapers%20y%20tecnologia" target="_blank" class="cta-wa" id="cta-whatsapp">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Asesoría WhatsApp
+        </a>
+      </div>
+      
+      <div class="hero-stats">
+        <div class="hs" id="stat-models"><strong>200+</strong><span>Modelos</span></div>
+        <div class="hs-div"></div>
+        <div class="hs" id="stat-flavors"><strong>50+</strong><span>Sabores</span></div>
+        <div class="hs-div"></div>
+        <div class="hs" id="stat-delivery"><strong>24h</strong><span>Despacho</span></div>
+      </div>
+    </div>
+    
+    <!-- 3D CYBERPUNK DEVICE INTERACTIVO -->
+    <div class="hero-visual">
+      <div class="vaper-3d-scene" id="vaper-scene">
+        <div class="vaper-3d-wrapper">
+          
+          <!-- Anillo holográfico 3D flotante superior -->
+          <div class="cyber-holo-ring hr-top"></div>
+          
+          <!-- Dispositivo Vape 3D construido en CSS -->
+          <div class="vape-device-3d">
+            <div class="vape-body-glass">
+              <div class="vape-liquid-fill"></div>
+              <div class="vape-core-coil"></div>
+            </div>
+            <div class="vape-mouthpiece"></div>
+            <div class="vape-base-led"></div>
+          </div>
+          
+          <!-- Anillo holográfico 3D flotante inferior -->
+          <div class="cyber-holo-ring hr-bottom"></div>
+          
+          <!-- Resplandores y Nubes de Vapor flotantes -->
+          <div class="visual-effects">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+            <div class="smoke-ring r-1"></div>
+            <div class="smoke-ring r-2"></div>
+          </div>
+          
+          <!-- Tags flotantes de características (Interactivas) -->
+          <div class="floating-tech-tag tag-1">🔋 Recargable Tipo-C</div>
+          <div class="floating-tech-tag tag-2">🍓 Malla Dual Core</div>
+          <div class="floating-tech-tag tag-3">🚀 Cyber Estética 3D</div>
+          <div class="floating-tech-tag tag-4">🔥 5000+ Puffs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MARQUEE (CINTA INFINITA FUTURISTA) -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>💨 VAPERS DESECHABLES</span><span>•</span>
+      <span>🔋 POD SYSTEMS Recargables</span><span>•</span>
+      <span>🧪 E-LIQUIDS Gourmet</span><span>•</span>
+      <span>⚙️ TECH DE VANGUARDIA</span><span>•</span>
+      <span>🔧 RESISTENCIAS & ACCESORIOS</span><span>•</span>
+      <span>💎 EDICIONES LIMITADAS CYBERPUNK</span><span>•</span>
+      <span>💨 VAPERS DESECHABLES</span><span>•</span>
+      <span>🔋 POD SYSTEMS Recargables</span><span>•</span>
+      <span>🧪 E-LIQUIDS Gourmet</span><span>•</span>
+      <span>⚙️ TECH DE VANGUARDIA</span><span>•</span>
+      <span>🔧 RESISTENCIAS & ACCESORIOS</span><span>•</span>
+      <span>💎 EDICIONES LIMITADAS CYBERPUNK</span><span>•</span>
+    </div>
   </div>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#inicio">Inicio</a></li>
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#marcas">Marcas</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="cart-btn" id="cart-toggle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span id="cart-count" class="cart-badge">0</span>
-    </button>
-    <button class="hamburger" id="hamburger">☰</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="inicio">
-  <div class="hero-smoke"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">⚡ Los mejores vapers de Colombia</div>
-    <h1 class="hero-h1">
-      <span>SIENTE EL</span>
-      <span class="hero-big">VAPOR</span>
-    </h1>
-    <p class="hero-p">Dispositivos premium, sabores únicos y la mejor experiencia. Envíos a todo el país.</p>
-    <div class="hero-ctas">
-      <a href="#productos" class="cta-main">Ver Catálogo</a>
-      <a href="https://wa.me/573052267408?text=Hola%20CBflow%20Tech%2C%20quiero%20info%20sobre%20vapers" target="_blank" class="cta-wa">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        WhatsApp
+  <!-- FILTERS SECTION -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <div class="filter-inner" id="filter-inner">
+        <!-- Generado dinámicamente desde CategoryStore -->
+        <button class="fp active" data-filter="all" id="btn-filter-all">Todos</button>
+      </div>
+    </div>
+  </section>
+  <!-- PRODUCTS SECTION -->
+  <section class="products-section" id="productos">
+    <div class="sec-header">
+      <h2>Catálogo <span class="acc">Premium Tech</span></h2>
+      <p>Innovación y calidad garantizada en cada calada</p>
+    </div>
+    <div class="products-grid" id="products-grid">
+      <!-- Los productos se inyectan dinámicamente mediante js/app.js -->
+    </div>
+  </section>
+  <!-- BRAND SHOWCASE -->
+  <section class="brands-section" id="marcas">
+    <div class="sec-header">
+      <h2>Marcas <span class="acc">Líderes</span></h2>
+      <p>Trabajamos solo con los mejores fabricantes mundiales</p>
+    </div>
+    <div class="brands-grid">
+      <div class="brand-card"><span>ELF BAR</span></div>
+      <div class="brand-card"><span>LOST MARY</span></div>
+      <div class="brand-card"><span>VAPORESSO</span></div>
+      <div class="brand-card"><span>SMOK</span></div>
+      <div class="brand-card"><span>VOOPOO</span></div>
+      <div class="brand-card"><span>GEEK VAPE</span></div>
+    </div>
+  </section>
+  <!-- TECH FEATURES -->
+  <section class="features-section">
+    <div class="feat-grid">
+      <div class="feat" id="feat-envio">
+        <div class="feat-ico">🚚</div>
+        <h3>Envío Express</h3>
+        <p>Entregas rápidas de 24 a 48 horas a todo el territorio colombiano</p>
+      </div>
+      <div class="feat" id="feat-original">
+        <div class="feat-ico">🛡️</div>
+        <h3>100% Originales</h3>
+        <p>Garantía de autenticidad en todos nuestros dispositivos y repuestos</p>
+      </div>
+      <div class="feat" id="feat-soporte">
+        <div class="feat-ico">🤖</div>
+        <h3>Asesoría del Futuro</h3>
+        <p>Escríbenos y te ayudamos a elegir el dispositivo ideal para ti</p>
+      </div>
+      <div class="feat" id="feat-seguro">
+        <div class="feat-ico">🔒</div>
+        <h3>Transacciones Seguras</h3>
+        <p>Aceptamos múltiples métodos de pago y pago contra entrega</p>
+      </div>
+    </div>
+  </section>
+  <!-- CONTACT & EXPERIENCES -->
+  <section class="contact-section" id="contacto">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h2>¿Listo para subir al <span class="acc">siguiente nivel?</span></h2>
+        <p>Escríbenos directamente a WhatsApp. Te brindamos asesoría personalizada e instantánea para elegir tu vaper o gadget ideal.</p>
+        <div class="contact-info">
+          <span>📍 Ubicación: Santa Marta, Colombia</span>
+          <span>📱 Línea directa: +57 305 226 7408</span>
+        </div>
+      </div>
+      
+      <a href="https://wa.me/573052267408?text=Hola%20CBflow%20Tech%2C%20quiero%20asesoria%20personalizada" target="_blank" class="wa-big-btn" id="btn-wa-big">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Escribir por WhatsApp
       </a>
     </div>
-    <div class="hero-stats">
-      <div class="hs"><strong>200+</strong><span>Modelos</span></div>
-      <div class="hs-div"></div>
-      <div class="hs"><strong>50+</strong><span>Sabores</span></div>
-      <div class="hs-div"></div>
-      <div class="hs"><strong>24h</strong><span>Envío</span></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="vaper-showcase">
-      <div class="vaper-glow"></div>
-      <div class="vaper-rings">
-        <div class="vr vr1"></div>
-        <div class="vr vr2"></div>
-        <div class="vr vr3"></div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:12px">
+          <span class="logo-icon">💨</span>
+          <span class="logo-name">CB<span class="acc">flow</span></span>
+          <span class="logo-sub">TECH</span>
+        </div>
+        <p>La combinación perfecta entre vapeo premium, tecnología futurista y la mejor experiencia de servicio en Colombia.</p>
       </div>
-      <div class="vaper-device">💨</div>
-      <div class="smoke-puff p1"></div>
-      <div class="smoke-puff p2"></div>
-      <div class="smoke-puff p3"></div>
-      <div class="flavor-tag ft1">🍓 Fresa</div>
-      <div class="flavor-tag ft2">🍋 Limón</div>
-      <div class="flavor-tag ft3">🍇 Uva</div>
-      <div class="flavor-tag ft4">🍑 Durazno</div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>💨 Vapers Desechables</span><span>•</span>
-    <span>🔋 Pod Systems</span><span>•</span>
-    <span>🌿 Sales de Nicotina</span><span>•</span>
-    <span>🧪 E-Liquids</span><span>•</span>
-    <span>⚙️ Mods & Tanks</span><span>•</span>
-    <span>🎨 Ediciones Limitadas</span><span>•</span>
-    <span>💨 Vapers Desechables</span><span>•</span>
-    <span>🔋 Pod Systems</span><span>•</span>
-    <span>🌿 Sales de Nicotina</span><span>•</span>
-    <span>🧪 E-Liquids</span><span>•</span>
-    <span>⚙️ Mods & Tanks</span><span>•</span>
-    <span>🎨 Ediciones Limitadas</span><span>•</span>
-  </div>
-</div>
-
-<!-- FILTERS -->
-<section class="filter-section">
-  <div class="filter-inner">
-    <button class="fp active" data-filter="all">Todos</button>
-    <button class="fp" data-filter="desechable">Desechables</button>
-    <button class="fp" data-filter="pod">Pod Systems</button>
-    <button class="fp" data-filter="liquido">E-Liquids</button>
-    <button class="fp" data-filter="mod">Mods</button>
-    <button class="fp" data-filter="accesorio">Accesorios</button>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="products-section" id="productos">
-  <div class="sec-header">
-    <h2>Catálogo <span class="acc">Premium</span></h2>
-    <p>Calidad garantizada en cada puff</p>
-  </div>
-  <div class="products-grid" id="products-grid"></div>
-</section>
-
-<!-- BRANDS -->
-<section class="brands-section" id="marcas">
-  <div class="sec-header">
-    <h2>Marcas <span class="acc">Top</span></h2>
-  </div>
-  <div class="brands-grid">
-    <div class="brand-card">
-      <span>ELF BAR</span>
-    </div>
-    <div class="brand-card">
-      <span>LOST MARY</span>
-    </div>
-    <div class="brand-card">
-      <span>VAPORESSO</span>
-    </div>
-    <div class="brand-card">
-      <span>SMOK</span>
-    </div>
-    <div class="brand-card">
-      <span>VOOPOO</span>
-    </div>
-    <div class="brand-card">
-      <span>GEEK VAPE</span>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features-section">
-  <div class="feat-grid">
-    <div class="feat">
-      <div class="feat-ico">🚚</div>
-      <h3>Envío Express</h3>
-      <p>Entrega en 24–48 horas a todo Colombia</p>
-    </div>
-    <div class="feat">
-      <div class="feat-ico">✅</div>
-      <h3>100% Originales</h3>
-      <p>Solo productos verificados y auténticos</p>
-    </div>
-    <div class="feat">
-      <div class="feat-ico">💬</div>
-      <h3>Asesoría Gratis</h3>
-      <p>Te ayudamos a elegir el vaper ideal</p>
-    </div>
-    <div class="feat">
-      <div class="feat-ico">🔒</div>
-      <h3>Pago Seguro</h3>
-      <p>Efectivo, transferencia y contra entrega</p>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="contacto">
-  <div class="contact-inner">
-    <div class="contact-text">
-      <h2>¿Listo para tu <span class="acc">próximo vaper?</span></h2>
-      <p>Escríbenos, te respondemos al instante y te asesoramos con el mejor equipo para ti.</p>
-      <div class="contact-info">
-        <span>📍 Santa Marta, Colombia</span>
-        <span>📱 +57 305 226 7408</span>
+      
+      <div class="footer-col" id="foot-links">
+        <h4>Navegación</h4>
+        <a href="#inicio">Inicio</a>
+        <a href="#productos">Catálogo</a>
+        <a href="#marcas">Marcas</a>
+        <a href="#contacto">Contacto</a>
+        <a href="admin.html" class="admin-link">🛡️ Panel Admin</a>
+      </div>
+      
+      <div class="footer-col" id="foot-contact">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/573052267408">+57 305 226 7408</a>
+        <span style="color:var(--text2)">Santa Marta, Colombia</span>
       </div>
     </div>
-    <a href="https://wa.me/573052267408?text=Hola%20CBflow%20Tech%2C%20quiero%20comprar%20un%20vaper" target="_blank" class="wa-big-btn">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      Escribir por WhatsApp
-    </a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="nav-logo" style="margin-bottom:12px">
-        <span class="logo-icon">💨</span>
-        <span class="logo-name">CB<span class="acc">flow</span></span>
-        <span class="logo-sub">TECH</span>
+    <div class="footer-bar">© 2026 CBflow Tech · Todos los derechos reservados · Santa Marta, Col.</div>
+  </footer>
+  <!-- SMART CYBER CART OVERLAY & SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-head">
+      <h3>🛒 Carrito Tech</h3>
+      <button id="cart-close" aria-label="Cerrar carrito">✕</button>
+    </div>
+    
+    <div class="cart-body" id="cart-body">
+      <!-- Los items se inyectan mediante js/app.js -->
+      <div class="cart-empty">
+        <span>💨</span>
+        <p>Tu carrito está vacío</p>
       </div>
-      <p>Tu tienda de confianza para vapers y e-cigs en Colombia.</p>
     </div>
-    <div class="footer-col">
-      <h4>Tienda</h4>
-      <a href="#productos">Catálogo</a>
-      <a href="#marcas">Marcas</a>
-      <a href="#contacto">Contacto</a>
-      <a href="admin.html">Panel Admin</a>
+    
+    <div class="cart-foot" id="cart-foot" style="display:none">
+      <div class="cart-total-row">
+        <span>Total Compra:</span>
+        <strong id="cart-total">$0</strong>
+      </div>
+      
+      <div class="cart-fields">
+        <input id="cn-name" type="text" placeholder="Tu nombre *" required />
+        <input id="cn-phone" type="tel" placeholder="Tu teléfono *" required />
+        <textarea id="cn-address" placeholder="Dirección de entrega completa *" rows="2" required></textarea>
+      </div>
+      
+      <button class="checkout-btn" id="checkout-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Confirmar Pedido por WhatsApp
+      </button>
     </div>
-    <div class="footer-col">
-      <h4>Contáctanos</h4>
-      <a href="https://wa.me/573052267408">+57 305 226 7408</a>
-      <span>Santa Marta, Colombia</span>
+  </aside>
+  <!-- PRODUCT DETAIL CYBER MODAL -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal-box" id="modal-box">
+      <button class="modal-x" id="modal-close" aria-label="Cerrar modal">✕</button>
+      <div id="modal-inner">
+        <!-- Inyectado dinámicamente mediante js/app.js -->
+      </div>
     </div>
   </div>
-  <div class="footer-bar">© 2025 CBflow Tech · Todos los derechos reservados</div>
-</footer>
-
-<!-- CART -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<aside class="cart-sidebar" id="cart-sidebar">
-  <div class="cart-head">
-    <h3>🛒 Carrito</h3>
-    <button id="cart-close">✕</button>
-  </div>
-  <div class="cart-body" id="cart-body">
-    <div class="cart-empty"><span>💨</span><p>Tu carrito está vacío</p></div>
-  </div>
-  <div class="cart-foot" id="cart-foot" style="display:none">
-    <div class="cart-total-row">
-      <span>Total:</span>
-      <strong id="cart-total">$0</strong>
-    </div>
-    <div class="cart-fields">
-      <input id="cn-name" type="text" placeholder="Tu nombre *"/>
-      <input id="cn-phone" type="text" placeholder="Tu teléfono *"/>
-      <textarea id="cn-address" placeholder="Dirección de entrega *" rows="2"></textarea>
-    </div>
-    <button class="checkout-btn" id="checkout-btn">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      Enviar Pedido por WhatsApp
-    </button>
-  </div>
-</aside>
-
-<!-- MODAL -->
-<div class="modal-bg" id="modal-bg">
-  <div class="modal-box" id="modal-box">
-    <button class="modal-x" id="modal-x">✕</button>
-    <div id="modal-inner"></div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<script src="js/producto.js"></script>
-<script src="js/app.js"></script>
+  <!-- FLOATING NOTIFICATION SYSTEM (TOAST) -->
+  <div class="toast" id="toast"></div>
+  <!-- SCRIPTING -->
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
