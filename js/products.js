@@ -1,149 +1,106 @@
-// ===== DEFAULT PRODUCTS (se cargan si no hay datos en localStorage) =====
+// ===== PRODUCTOS POR DEFECTO =====
 const DEFAULT_PRODUCTS = [
   {
     id: 1,
-    name: "AirPods Pro Max",
-    category: "audio",
-    categoryLabel: "Audio",
-    price: 350000,
-    oldPrice: 420000,
-    emoji: "🎧",
-    desc: "Auriculares inalámbricos premium con cancelación activa de ruido, sonido Hi-Fi y hasta 30 horas de batería. Conectividad Bluetooth 5.3.",
-    badge: "sale",
-    badgeLabel: "OFERTA",
-    stock: 15,
-    featured: true
+    name: "Elf Bar BC5000",
+    category: "desechable",
+    price: 45000,
+    oldPrice: 55000,
+    emoji: "💨",
+    img: null,
+    desc: "5000 puffs, 13ml de líquido, batería recargable 650mAh. Disponible en más de 20 sabores.",
+    badge: "hot", badgeLabel: "HOT",
+    stock: 30, featured: true
   },
   {
     id: 2,
-    name: "SmartWatch Ultra",
-    category: "movil",
-    categoryLabel: "Móvil",
-    price: 280000,
+    name: "Lost Mary MO5000",
+    category: "desechable",
+    price: 48000,
     oldPrice: null,
-    emoji: "⌚",
-    desc: "Reloj inteligente con GPS integrado, monitor cardíaco, SpO2, pantalla AMOLED y resistencia al agua IP68.",
-    badge: "new",
-    badgeLabel: "NUEVO",
-    stock: 22,
-    featured: true
+    emoji: "🌬️",
+    img: null,
+    desc: "5000 puffs con malla de doble núcleo. Sabor intenso y duradero. Batería tipo C recargable.",
+    badge: "new", badgeLabel: "NUEVO",
+    stock: 25, featured: true
   },
   {
     id: 3,
-    name: "Teclado Mecánico RGB",
-    category: "computacion",
-    categoryLabel: "Computación",
-    price: 180000,
-    oldPrice: null,
-    emoji: "⌨️",
-    desc: "Teclado mecánico gamer con switches red, iluminación RGB por tecla, anti-ghosting y construcción en aluminio.",
-    badge: null,
-    badgeLabel: null,
-    stock: 30,
-    featured: false
+    name: "Vaporesso XROS 4",
+    category: "pod",
+    price: 120000,
+    oldPrice: 150000,
+    emoji: "🔋",
+    img: null,
+    desc: "Pod system recargable 1000mAh, pantalla OLED, potencia ajustable 1–16W, pods de 2ml.",
+    badge: "sale", badgeLabel: "OFERTA",
+    stock: 12, featured: true
   },
   {
     id: 4,
-    name: "Cámara de Seguridad 4K",
-    category: "smart",
-    categoryLabel: "Smart Home",
-    price: 150000,
-    oldPrice: 195000,
-    emoji: "📷",
-    desc: "Cámara IP Wi-Fi 4K con visión nocturna, detección de movimiento, almacenamiento en nube y app móvil.",
-    badge: "sale",
-    badgeLabel: "OFERTA",
-    stock: 18,
-    featured: true
+    name: "Sales Nic Mango Ice 30ml",
+    category: "liquido",
+    price: 28000,
+    oldPrice: null,
+    emoji: "🧪",
+    img: null,
+    desc: "Sales de nicotina 50mg/ml. Sabor mango con toque de hielo. Fórmula suave para pods.",
+    badge: null, badgeLabel: null,
+    stock: 50, featured: false
   },
   {
     id: 5,
-    name: "Mouse Gamer Pro",
-    category: "gaming",
-    categoryLabel: "Gaming",
-    price: 95000,
+    name: "SMOK Nord 5",
+    category: "pod",
+    price: 135000,
     oldPrice: null,
-    emoji: "🖱️",
-    desc: "Mouse ergonómico con sensor óptico de 25600 DPI, 8 botones programables, RGB y cable trenzado.",
-    badge: null,
-    badgeLabel: null,
-    stock: 45,
-    featured: false
+    emoji: "⚡",
+    img: null,
+    desc: "80W de potencia, batería 2000mAh, pantalla TFT a color, compatible con coils RPM y Nord.",
+    badge: null, badgeLabel: null,
+    stock: 8, featured: false
   },
   {
     id: 6,
-    name: "Cable USB-C 240W",
-    category: "accesorios",
-    categoryLabel: "Accesorios",
-    price: 35000,
+    name: "Coils RPM 0.4Ω x5",
+    category: "accesorio",
+    price: 22000,
     oldPrice: null,
-    emoji: "🔌",
-    desc: "Cable USB-C a USB-C con soporte hasta 240W de carga rápida, transferencia de datos 40Gbps y longitud de 2 metros.",
-    badge: "new",
-    badgeLabel: "NUEVO",
-    stock: 100,
-    featured: false
-  },
-  {
-    id: 7,
-    name: "Parlante Bluetooth 360°",
-    category: "audio",
-    categoryLabel: "Audio",
-    price: 220000,
-    oldPrice: 265000,
-    emoji: "🔊",
-    desc: "Altavoz portátil con sonido 360° envolvente, resistencia al agua IPX7, 20 horas de batería y carga USB-C.",
-    badge: "sale",
-    badgeLabel: "OFERTA",
-    stock: 12,
-    featured: true
-  },
-  {
-    id: 8,
-    name: "Hub USB-C 10 en 1",
-    category: "computacion",
-    categoryLabel: "Computación",
-    price: 120000,
-    oldPrice: null,
-    emoji: "🔗",
-    desc: "Hub multipuerto con HDMI 4K, 3x USB-A 3.0, USB-C PD 100W, lector SD/MicroSD, Ethernet y audio 3.5mm.",
-    badge: "new",
-    badgeLabel: "NUEVO",
-    stock: 25,
-    featured: false
+    emoji: "🔧",
+    img: null,
+    desc: "Pack x5 resistencias RPM mesh 0.4Ω. Compatibles con SMOK Nord, RPM2 y derivados.",
+    badge: null, badgeLabel: null,
+    stock: 60, featured: false
   }
 ];
 
-// ===== PRODUCT STORE =====
+const DEFAULT_CATEGORIES = [
+  { id: "desechable", label: "Desechables", emoji: "💨" },
+  { id: "pod",        label: "Pod Systems",  emoji: "🔋" },
+  { id: "liquido",    label: "E-Liquids",    emoji: "🧪" },
+  { id: "mod",        label: "Mods",         emoji: "⚙️" },
+  { id: "accesorio",  label: "Accesorios",   emoji: "🔧" }
+];
+
+// ===== STORE =====
 const ProductStore = {
   getAll() {
-    try {
-      const saved = localStorage.getItem('cbflow_products');
-      if (saved) return JSON.parse(saved);
-    } catch(e) {}
+    try { const s = localStorage.getItem('cbflow_products'); if (s) return JSON.parse(s); } catch(e) {}
     return DEFAULT_PRODUCTS;
   },
-  save(products) {
-    try { localStorage.setItem('cbflow_products', JSON.stringify(products)); } catch(e) {}
+  save(p) { try { localStorage.setItem('cbflow_products', JSON.stringify(p)); } catch(e) {} },
+  nextId() { const p = this.getAll(); return p.length ? Math.max(...p.map(x => x.id)) + 1 : 1; },
+  add(p) { const all = this.getAll(); p.id = this.nextId(); all.push(p); this.save(all); return p; },
+  update(id, data) { const all = this.getAll(); const i = all.findIndex(p => p.id === id); if (i !== -1) { all[i] = { ...all[i], ...data }; this.save(all); } },
+  delete(id) { this.save(this.getAll().filter(p => p.id !== id)); }
+};
+
+const CategoryStore = {
+  getAll() {
+    try { const s = localStorage.getItem('cbflow_cats'); if (s) return JSON.parse(s); } catch(e) {}
+    return DEFAULT_CATEGORIES;
   },
-  getNextId() {
-    const products = this.getAll();
-    return products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-  },
-  add(product) {
-    const products = this.getAll();
-    product.id = this.getNextId();
-    products.push(product);
-    this.save(products);
-    return product;
-  },
-  update(id, data) {
-    const products = this.getAll();
-    const idx = products.findIndex(p => p.id === id);
-    if (idx !== -1) { products[idx] = { ...products[idx], ...data }; this.save(products); }
-  },
-  delete(id) {
-    const products = this.getAll().filter(p => p.id !== id);
-    this.save(products);
-  }
+  save(c) { try { localStorage.setItem('cbflow_cats', JSON.stringify(c)); } catch(e) {} },
+  add(c) { const all = this.getAll(); if (!all.find(x => x.id === c.id)) { all.push(c); this.save(all); } },
+  delete(id) { this.save(this.getAll().filter(c => c.id !== id)); }
 };
