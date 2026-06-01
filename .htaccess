@@ -1,0 +1,35 @@
+# Configuración para servidor Apache
+# Activa si estás usando Apache como servidor
+
+# Redireccionamiento de http a https (descomenta si tienes SSL)
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# Compresión de archivos
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache del navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+# Versión predeterminada en buscadores
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    # Elimina www si está presente (opcional)
+    # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    # RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+</IfModule>

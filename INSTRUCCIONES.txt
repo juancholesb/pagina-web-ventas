@@ -1,0 +1,50 @@
+<!-- 
+GUÍA DE PERSONALIZACIÓN RÁPIDA
+==============================
+
+1. CAMBIAR NOMBRE DE NEGOCIO:
+   - Busca "Mi Negocio" en index.html y reemplázalo
+   - Busca "paginaweb-ventas" en package.json
+
+2. CAMBIAR COLORES PRINCIPALES:
+   - Abre css/styles.css
+   - Modifica las líneas 1-10 en :root {}
+   - primary-color: tu color principal
+   - success-color: color de botones
+
+3. AGREGAR TUS PRODUCTOS:
+   - Reemplaza las imágenes placeholder por las tuyas
+   - Modifica precios y nombres
+   - Copia y pega cards de productos si necesitas más
+
+4. AGREGAR IMÁGENES:
+   - Guarda tus fotos en la carpeta "images/"
+   - Reemplaza las URLs https://via.placeholder.com/ con tus rutas
+   - Ejemplo: src="images/producto1.jpg"
+
+5. CONTACTO:
+   - Teléfono: +1 (555) 123-4567 (busca y reemplaza)
+   - Email: info@minegocio.com
+   - Dirección: Calle Principal 123, Ciudad
+
+6. REDES SOCIALES:
+   - Busca href="#" en la sección redes-sociales
+   - Reemplaza # por tus URLs de Facebook, Instagram, etc.
+
+7. SUBIR A INTERNET:
+   - Opción 1: GitHub Pages (gratis)
+   - Opción 2: Netlify (gratis)
+   - Opción 3: Hosting pagado (GoDaddy, Hostinger, etc.)
+
+¡Listo para vender! 🚀
+-->
+
+ARCHIVOS CREADOS:
+✅ index.html          - Página principal
+✅ css/styles.css      - Estilos y diseño responsivo
+✅ js/script.js        - Funcionalidad JavaScript
+✅ .htaccess           - Configuración del servidor
+✅ package.json        - Información del proyecto
+✅ README.md           - Documentación completa
+✅ images/             - Carpeta para tus imágenes
+✅ assets/             - Carpeta para otros recursos

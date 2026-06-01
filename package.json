@@ -1,0 +1,13 @@
+{
+  "name": "paginaweb-ventas",
+  "version": "1.0.0",
+  "description": "Página web de ventas moderna y responsiva",
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "keywords": [
+    "ecommerce",
+    "tienda-online",
+    "ventas",
+    "responsive"
+  ]
+}
