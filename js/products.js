@@ -2,39 +2,45 @@
 const DEFAULT_PRODUCTS = [
   {
     id: 1,
-    name: "Elf Bar BC5000",
+    name: "Elf Bar BC5000 Cyber",
     category: "desechable",
     price: 45000,
     oldPrice: 55000,
     emoji: "💨",
     img: null,
-    desc: "5000 puffs, 13ml de líquido, batería recargable 650mAh. Disponible en más de 20 sabores.",
-    badge: "hot", badgeLabel: "HOT",
-    stock: 30, featured: true
+    desc: "5000 puffs con diseño ultra estilizado, 13ml de líquido, batería recargable de 650mAh. Sabor intenso de fresa kiwi con un golpe helado.",
+    badge: "hot",
+    badgeLabel: "HOT 🔥",
+    stock: 30,
+    featured: true
   },
   {
     id: 2,
-    name: "Lost Mary MO5000",
+    name: "Lost Mary MO5000 Tech",
     category: "desechable",
     price: 48000,
     oldPrice: null,
     emoji: "🌬️",
     img: null,
-    desc: "5000 puffs con malla de doble núcleo. Sabor intenso y duradero. Batería tipo C recargable.",
-    badge: "new", badgeLabel: "NUEVO",
-    stock: 25, featured: true
+    desc: "5000 puffs de sabor premium con resistencia de malla dual. Diseño ergonómico transparente con luz LED indicadora al inhalar.",
+    badge: "new",
+    badgeLabel: "NUEVO ✨",
+    stock: 25,
+    featured: true
   },
   {
     id: 3,
-    name: "Vaporesso XROS 4",
+    name: "Vaporesso XROS 4 Pro",
     category: "pod",
     price: 120000,
     oldPrice: 150000,
     emoji: "🔋",
     img: null,
-    desc: "Pod system recargable 1000mAh, pantalla OLED, potencia ajustable 1–16W, pods de 2ml.",
-    badge: "sale", badgeLabel: "OFERTA",
-    stock: 12, featured: true
+    desc: "El Pod System definitivo de 1000mAh. Cuenta con pantalla OLED futurista, potencia ajustable de 1-30W y control deslizante de flujo de aire premium.",
+    badge: "sale",
+    badgeLabel: "OFERTA ⚡",
+    stock: 12,
+    featured: true
   },
   {
     id: 4,
@@ -44,36 +50,41 @@ const DEFAULT_PRODUCTS = [
     oldPrice: null,
     emoji: "🧪",
     img: null,
-    desc: "Sales de nicotina 50mg/ml. Sabor mango con toque de hielo. Fórmula suave para pods.",
-    badge: null, badgeLabel: null,
-    stock: 50, featured: false
+    desc: "Sales de nicotina de 50mg/ml con sabor intenso a mango tropical y un toque de mentol refrescante. Perfectas para tus dispositivos pod.",
+    badge: null,
+    badgeLabel: null,
+    stock: 50,
+    featured: false
   },
   {
     id: 5,
-    name: "SMOK Nord 5",
+    name: "SMOK Nord 5 Cyber",
     category: "pod",
     price: 135000,
     oldPrice: null,
     emoji: "⚡",
     img: null,
-    desc: "80W de potencia, batería 2000mAh, pantalla TFT a color, compatible con coils RPM y Nord.",
-    badge: null, badgeLabel: null,
-    stock: 8, featured: false
+    desc: "Hasta 80W de potencia pura, batería de 2000mAh integrada y pantalla digital a color. Excelente producción de vapor y compatibilidad con resistencias RPM3.",
+    badge: null,
+    badgeLabel: null,
+    stock: 8,
+    featured: false
   },
   {
     id: 6,
-    name: "Coils RPM 0.4Ω x5",
+    name: "Coils RPM3 0.15Ω x5",
     category: "accesorio",
     price: 22000,
     oldPrice: null,
     emoji: "🔧",
     img: null,
-    desc: "Pack x5 resistencias RPM mesh 0.4Ω. Compatibles con SMOK Nord, RPM2 y derivados.",
-    badge: null, badgeLabel: null,
-    stock: 60, featured: false
+    desc: "Pack de 5 resistencias de malla RPM3 de 0.15 ohmios. Diseñadas para una óptima transferencia de sabor y una densa nube de vapor.",
+    badge: null,
+    badgeLabel: null,
+    stock: 60,
+    featured: false
   }
 ];
-
 const DEFAULT_CATEGORIES = [
   { id: "desechable", label: "Desechables", emoji: "💨" },
   { id: "pod",        label: "Pod Systems",  emoji: "🔋" },
@@ -81,26 +92,83 @@ const DEFAULT_CATEGORIES = [
   { id: "mod",        label: "Mods",         emoji: "⚙️" },
   { id: "accesorio",  label: "Accesorios",   emoji: "🔧" }
 ];
-
-// ===== STORE =====
+// ===== STORE (ALMACÉN DE DATOS EN LOCALSTORAGE) =====
 const ProductStore = {
   getAll() {
-    try { const s = localStorage.getItem('cbflow_products'); if (s) return JSON.parse(s); } catch(e) {}
+    try {
+      const s = localStorage.getItem('cbflow_products');
+      if (s) return JSON.parse(s);
+    } catch(e) {}
+    // Si no hay datos, inicializamos con los por defecto y los guardamos
+    this.save(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
-  save(p) { try { localStorage.setItem('cbflow_products', JSON.stringify(p)); } catch(e) {} },
-  nextId() { const p = this.getAll(); return p.length ? Math.max(...p.map(x => x.id)) + 1 : 1; },
-  add(p) { const all = this.getAll(); p.id = this.nextId(); all.push(p); this.save(all); return p; },
-  update(id, data) { const all = this.getAll(); const i = all.findIndex(p => p.id === id); if (i !== -1) { all[i] = { ...all[i], ...data }; this.save(all); } },
-  delete(id) { this.save(this.getAll().filter(p => p.id !== id)); }
+  save(p) {
+    try {
+      localStorage.setItem('cbflow_products', JSON.stringify(p));
+    } catch(e) {}
+  },
+  nextId() {
+    const p = this.getAll();
+    return p.length ? Math.max(...p.map(x => x.id)) + 1 : 1;
+  },
+  add(p) {
+    const all = this.getAll();
+    p.id = this.nextId();
+    all.push(p);
+    this.save(all);
+    return p;
+  },
+  update(id, data) {
+    const all = this.getAll();
+    const i = all.findIndex(p => p.id === id);
+    if (i !== -1) {
+      all[i] = { ...all[i], ...data };
+      this.save(all);
+    }
+  },
+  delete(id) {
+    this.save(this.getAll().filter(p => p.id !== id));
+  }
 };
-
 const CategoryStore = {
   getAll() {
-    try { const s = localStorage.getItem('cbflow_cats'); if (s) return JSON.parse(s); } catch(e) {}
+    try {
+      const s = localStorage.getItem('cbflow_cats');
+      if (s) return JSON.parse(s);
+    } catch(e) {}
+    this.save(DEFAULT_CATEGORIES);
     return DEFAULT_CATEGORIES;
   },
-  save(c) { try { localStorage.setItem('cbflow_cats', JSON.stringify(c)); } catch(e) {} },
-  add(c) { const all = this.getAll(); if (!all.find(x => x.id === c.id)) { all.push(c); this.save(all); } },
-  delete(id) { this.save(this.getAll().filter(c => c.id !== id)); }
+  save(c) {
+    try {
+      localStorage.setItem('cbflow_cats', JSON.stringify(c));
+    } catch(e) {}
+  },
+  add(c) {
+    const all = this.getAll();
+    if (!all.find(x => x.id === c.id)) {
+      all.push(c);
+      this.save(all);
+    }
+  },
+  delete(id) {
+    this.save(this.getAll().filter(c => c.id !== id));
+  }
+};
+const AdminStore = {
+  getCredentials() {
+    try {
+      const s = localStorage.getItem('cbflow_admin_creds');
+      if (s) return JSON.parse(s);
+    } catch(e) {}
+    const defaults = { email: "admin@cbflow.tech", pass: "cbflow2025" };
+    this.saveCredentials(defaults);
+    return defaults;
+  },
+  saveCredentials(creds) {
+    try {
+      localStorage.setItem('cbflow_admin_creds', JSON.stringify(creds));
+    } catch(e) {}
+  }
 };
