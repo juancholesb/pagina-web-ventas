@@ -218,3 +218,339 @@
 <script src="js/admin.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CBflow Tech — Cyber Command Center</title>
+  <!-- No indexation in search engines for security -->
+  <meta name="robots" content="noindex, nofollow"/>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Urbanist:wght@300;400;600;700;800;900&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/admin.css"/>
+</head>
+<body>
+  <!-- NEON BACKGROUND CANVAS -->
+  <canvas id="bg-canvas"></canvas>
+  <!-- ==========================================
+       LOGIN SECURE SCREEN WITH RECOVERY
+       ========================================== -->
+  <div class="login-wrap" id="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">💨 CB<span class="logo-cb">flow</span> <span class="logo-tech">TECH</span></div>
+      
+      <!-- FORM 1: ACCESO NORMAL -->
+      <div id="login-form-area">
+        <h2>Cyber Command Center</h2>
+        <p>Introduce la contraseña de seguridad para acceder</p>
+        
+        <div class="login-field">
+          <input type="password" id="ap" placeholder="Contraseña de acceso *" required />
+          <button id="login-btn">ENTRAR</button>
+        </div>
+        <div class="login-err" id="login-err">❌ Contraseña incorrecta</div>
+        
+        <div class="login-hint">Por defecto: <strong>cbflow2025</strong></div>
+        <a href="#" class="forgot-link" id="forgot-link">¿Olvidaste tu contraseña?</a>
+      </div>
+      
+      <!-- FORM 2: RECUPERACIÓN DE CORREO -->
+      <div id="recover-form-area" style="display:none">
+        <h2>Recuperar Acceso</h2>
+        <p>Valida tu identidad ingresando tu correo registrado</p>
+        
+        <div class="login-field" style="flex-direction:column; gap:12px">
+          <input type="email" id="recover-email" placeholder="Correo electrónico registrado *" required style="width:100%" />
+          <button id="recover-btn" style="width:100%">VALIDAR CORREO</button>
+        </div>
+        <div class="login-err" id="recover-feedback"></div>
+        
+        <button class="back-link-btn" id="back-to-login-btn">← Volver al Login</button>
+      </div>
+      
+      <!-- FORM 3: RESTABLECER CONTRASEÑA DIRECTA -->
+      <div id="reset-form-area" style="display:none">
+        <h2>Nueva Contraseña</h2>
+        <p>Ingresa tu nueva contraseña para guardar los cambios</p>
+        
+        <div class="login-field" style="flex-direction:column; gap:12px">
+          <input type="password" id="new-password-field" placeholder="Nueva Contraseña (mínimo 4 caracteres) *" required style="width:100%" />
+          <button id="reset-password-btn" style="width:100%">GUARDAR CONTRASEÑA</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ==========================================
+       ADMINISTRATIVE COMMAND PANEL (DASHBOARD)
+       ========================================== -->
+  <div class="panel" id="panel" style="display:none">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">💨 CB<span>flow</span></div>
+      <nav class="sidebar-nav">
+        <a class="si active" data-tab="dashboard">📊 Dashboard</a>
+        <a class="si" data-tab="products">📦 Productos</a>
+        <a class="si" data-tab="add">➕ Agregar Producto</a>
+        <a class="si" data-tab="categories">🏷️ Categorías</a>
+        <a class="si" data-tab="settings">⚙️ Ajustes</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="index.html" class="si shop-link" style="color:var(--accent)">🌐 Ver Tienda</a>
+        <button class="si logout-btn" id="logout-btn">🚪 Cerrar Sesión</button>
+      </div>
+    </aside>
+    <!-- MAIN DISPLAY AREA -->
+    <main class="admin-main">
+      <div class="topbar">
+        <h1 id="page-title">Dashboard</h1>
+        <span class="admin-badge">⚡ Admin CBflow Tech</span>
+      </div>
+      <!-- TAB 1: DASHBOARD STATS -->
+      <div class="tab on" id="tab-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div>
+              <div class="stat-value" id="st-total">0</div>
+              <div class="stat-label">Productos</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <div>
+              <div class="stat-value" id="st-cats">0</div>
+              <div class="stat-label">Categorías</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div>
+              <div class="stat-value" id="st-hot">0</div>
+              <div class="stat-label">Destacados</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔋</div>
+            <div>
+              <div class="stat-value" id="st-stock">0</div>
+              <div class="stat-label">Stock Total</div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-section">
+          <h3 class="section-h">Últimos Productos Agregados</h3>
+          <div class="recent-products" id="recent-grid">
+            <!-- Cargados dinámicamente desde admin.js -->
+          </div>
+        </div>
+        <div class="dash-section" style="margin-top:40px">
+          <h3 class="section-h">Canales de Venta Rápidos</h3>
+          <a href="https://wa.me/573052267408" target="_blank" class="wa-quick-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style="margin-right:8px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Abrir WhatsApp Business
+          </a>
+        </div>
+      </div>
+      <!-- TAB 2: PRODUCT LIST -->
+      <div class="tab" id="tab-products">
+        <div class="tab-actions">
+          <input type="text" id="search-p" class="search-input" placeholder="🔍 Buscar producto por nombre..."/>
+          <select id="filter-cat" class="filter-select">
+            <option value="all">Todas las categorías</option>
+          </select>
+        </div>
+        
+        <div class="products-table-wrap">
+          <table class="products-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Etiqueta</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="ptbody">
+              <!-- Cargado dinámicamente desde admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- TAB 3: ADD / EDIT PRODUCT -->
+      <div class="tab" id="tab-add">
+        <div class="form-card">
+          <h2 class="form-title" id="form-ttl">➕ Agregar Nuevo Producto</h2>
+          
+          <div class="form-grid">
+            
+            <!-- IMAGE LOADER -->
+            <div class="form-group full">
+              <label>Imagen del Producto</label>
+              <div class="img-upload-area" id="img-upload-area">
+                <div class="img-preview" id="img-placeholder">
+                  <span>📷<br><small>Haz clic, arrastra o suelta una foto del producto aquí</small></span>
+                </div>
+                <img id="img-result" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Cargada"/>
+                
+                <input type="file" id="f-img" accept="image/*" style="display:none"/>
+                <div class="img-btns">
+                  <button type="button" class="btn-save" style="padding:10px 20px; font-size:0.8rem; border-radius:10px" id="btn-pick-img">📁 Cargar Foto</button>
+                  <button type="button" class="btn-cancel" style="padding:10px 15px; font-size:0.8rem; border-radius:10px; display:none" id="btn-rm-img">✕ Quitar</button>
+                </div>
+              </div>
+            </div>
+            <!-- NAME -->
+            <div class="form-group full">
+              <label>Nombre del Producto *</label>
+              <input type="text" id="f-name" placeholder="Ej: Vaporesso XROS 4 Mini" required />
+            </div>
+            <!-- CATEGORY -->
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select id="f-cat" required>
+                <option value="">Selecciona...</option>
+              </select>
+            </div>
+            <!-- BACKUP EMOJI -->
+            <div class="form-group">
+              <label>Emoji de respaldo (si no cargas imagen)</label>
+              <input type="text" id="f-emoji" placeholder="💨" />
+            </div>
+            <!-- PRICE -->
+            <div class="form-group">
+              <label>Precio de Venta (COP) *</label>
+              <input type="number" id="f-price" placeholder="120000" required />
+            </div>
+            <!-- OLD PRICE -->
+            <div class="form-group">
+              <label>Precio Tachado / Anterior (opcional)</label>
+              <input type="number" id="f-oldprice" placeholder="150000" />
+            </div>
+            <!-- STOCK -->
+            <div class="form-group">
+              <label>Unidades en Stock *</label>
+              <input type="number" id="f-stock" placeholder="20" required />
+            </div>
+            <!-- BADGE -->
+            <div class="form-group">
+              <label>Etiqueta de Destacado</label>
+              <select id="f-badge">
+                <option value="">Ninguna</option>
+                <option value="new">🆕 NUEVO</option>
+                <option value="sale">💸 OFERTA</option>
+                <option value="hot">🔥 CALIENTE (HOT)</option>
+              </select>
+            </div>
+            <!-- FEATURED TOGGLE -->
+            <div class="form-group full">
+              <label class="checkbox-label">
+                <input type="checkbox" id="f-featured" />
+                Destacar en la página principal (sección destacados)
+              </label>
+            </div>
+            <!-- DESCRIPTION -->
+            <div class="form-group full">
+              <label>Descripción detallada *</label>
+              <textarea id="f-desc" rows="4" placeholder="Especificaciones técnicas, puffs, capacidad, etc..." required></textarea>
+            </div>
+            
+          </div>
+          <!-- PREVIEW CARD INTERACTIVO -->
+          <div class="form-preview">
+            <h3>Previsualización de Tarjeta:</h3>
+            <div class="preview-card">
+              <div class="preview-emoji" id="prev-img"><span id="prev-emo">💨</span></div>
+              <div style="flex:1">
+                <div class="preview-name" id="prev-name">Nombre del producto</div>
+                <div class="preview-price" id="prev-price">$0 COP</div>
+              </div>
+            </div>
+          </div>
+          <!-- FORM ACTIONS -->
+          <div class="form-actions">
+            <button class="btn-cancel" id="btn-cancel-edit" style="display:none">Cancelar Edición</button>
+            <button class="btn-save" id="btn-save">💾 Guardar Producto</button>
+          </div>
+          <div class="form-msg" id="form-feedback"></div>
+        </div>
+      </div>
+      <!-- TAB 4: CATEGORY MANAGER -->
+      <div class="tab" id="tab-categories">
+        <div class="form-card" style="max-width:620px">
+          <h2 class="form-title">🏷️ Gestionar Categorías dinámicamente</h2>
+          <p style="color:var(--text2); font-size:0.9rem; margin-bottom:28px">Las categorías creadas aquí aparecerán como filtros en la tienda en vivo y opciones en la creación de productos.</p>
+          
+          <div class="cat-form-row" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap">
+            <input type="text" id="cat-emoji" placeholder="💨 Emoji" style="width:90px; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px" />
+            <input type="text" id="cat-id" placeholder="ID (ej: auriculares)" style="flex:1; min-width:140px; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px" />
+            <input type="text" id="cat-label" placeholder="Nombre visible (ej: Auriculares)" style="flex:2; min-width:180px; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px" />
+            <button class="btn-save" id="btn-add-cat" style="padding:10px 24px; border-radius:10px">+ Crear</button>
+          </div>
+          <div class="form-msg" id="cat-feedback"></div>
+          
+          <div class="cats-list-container" style="margin-top:30px">
+            <h4 style="margin-bottom:14px; font-family:'Orbitron',sans-serif; font-size:0.85rem; color:var(--accent)">Categorías Registradas:</h4>
+            <div class="cats-list" id="cats-list">
+              <!-- Cargado dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- TAB 5: SETTINGS (AJUSTES CONTRASEÑA/EMAIL) -->
+      <div class="tab" id="tab-settings">
+        <div class="form-card" style="max-width:550px">
+          <h2 class="form-title">⚙️ Ajustes del Panel Administrador</h2>
+          <p style="color:var(--text2); font-size:0.9rem; margin-bottom:28px">Cambia tu correo de recuperación y la contraseña del panel de forma visual.</p>
+          
+          <div class="form-grid" style="grid-template-columns:1fr; gap:20px">
+            <div class="form-group">
+              <label>Correo Electrónico de Recuperación *</label>
+              <input type="email" id="settings-email" placeholder="admin@cbflow.tech" required />
+            </div>
+            
+            <div class="form-group">
+              <label>Contraseña Actual * (Requerido para guardar cambios)</label>
+              <input type="password" id="settings-oldpass" placeholder="Ingresa contraseña actual" required />
+            </div>
+            
+            <div class="form-group">
+              <label>Nueva Contraseña (Dejar en blanco si no deseas cambiarla)</label>
+              <input type="password" id="settings-newpass" placeholder="Ingresa nueva contraseña" />
+            </div>
+          </div>
+          
+          <div class="form-actions" style="margin-top:28px">
+            <button class="btn-save" id="btn-save-settings">💾 Guardar Configuración</button>
+          </div>
+          <div class="form-msg" id="settings-feedback"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <!-- CUSTOM CONFIRM DIALOG OVERLAY -->
+  <div class="confirm-overlay" id="confirm-ov">
+    <div class="confirm-box">
+      <h3>⚠️ ¿Deseas eliminar este producto?</h3>
+      <p>Esta operación es irreversible y lo quitará permanentemente de tu catálogo y tienda de ventas.</p>
+      <div class="confirm-btns">
+        <button id="conf-no">Cancelar</button>
+        <button id="conf-yes" class="danger">Sí, Eliminar</button>
+      </div>
+    </div>
+  </div>
+  <!-- FLOATING ADMIN TOAST SYSTEM -->
+  <div class="admin-toast" id="admin-toast"></div>
+  <!-- SCRIPTS -->
+  <script src="js/products.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
