@@ -100,6 +100,10 @@ const ProductStore = {
     if (this.cache) return this.cache;
     if (SupabaseStore.isConfigured()) {
       await SupabaseStore.syncToLocal();
+      // Iniciar suscripciones en tiempo real para actualizar clientes automáticamente
+      if (typeof SupabaseStore.startRealtime === 'function') {
+        SupabaseStore.startRealtime();
+      }
     }
     this.cache = this.getAllLocal();
     return this.cache;

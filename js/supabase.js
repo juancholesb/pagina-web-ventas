@@ -77,6 +77,35 @@ const SupabaseStore = {
     }
   },
 
+  // Iniciar suscripciones en tiempo real para mantener clientes sincronizados
+  startRealtime() {
+    if (!this.isConfigured() || this._realtimeStarted) return;
+    this._realtimeStarted = true;
+
+    const onChange = (payload) => {
+      try {
+        console.debug('Supabase realtime change:', payload);
+        // Re-sincronizar local y notificar a la UI
+        this.syncToLocal();
+        window.dispatchEvent(new Event('supabase:change'));
+      } catch (e) {
+        console.warn('Error handling realtime payload', e);
+      }
+    };
+
+    // Subscribir a cambios en products, variants y categories
+    try {
+      supabaseClient
+        .channel('realtime-products')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, onChange)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'variants' }, onChange)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'categories' }, onChange)
+        .subscribe();
+    } catch (err) {
+      console.warn('Supabase realtime subscribe failed:', err && err.message ? err.message : err);
+    }
+  },
+
   async saveProduct(product) {
     if (!this.isConfigured()) return;
     try {
