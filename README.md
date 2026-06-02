@@ -2,7 +2,22 @@
 
 Una página web moderna y responsiva para tu tienda online, lista para personalizar y subir a tu servidor.
 
-## 📁 Estructura de Carpetas
+## � Pasos rápidos para que funcione la sincronización
+
+1. Sube este repositorio a GitHub.
+2. En Vercel, crea un proyecto nuevo y conéctalo con tu repositorio.
+3. Agrega estas variables de entorno en Vercel:
+   - `SUPABASE_URL` = tu URL de Supabase
+   - `SUPABASE_ANON_KEY` = tu anon key de Supabase
+   - `SUPABASE_SERVICE_ROLE_KEY` = tu service role key de Supabase (secreto)
+4. Despliega el proyecto en Vercel.
+5. Abre la página en dos dispositivos o pestañas y prueba:
+   - modificar productos en uno
+   - observar que el otro se actualiza
+
+> Si te parece difícil, haz solo estos pasos: subir a GitHub, conectar a Vercel y configurar las tres variables.
+
+## �📁 Estructura de Carpetas
 
 ```
 paginaweb ventas/
