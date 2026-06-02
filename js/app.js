@@ -252,6 +252,69 @@ function initStorefront() {
       if (e.target === modalBg) closeModal();
     });
   }
+
+  // Inicializar indicador de sincronización (Forzar sync / mostrar vars)
+  (function initSyncIndicator(){
+    const ind = document.getElementById('sync-indicator');
+    if (!ind) return;
+
+    const statusEl = ind.querySelector('.si-status');
+    const btnForce = document.getElementById('btn-sync-force');
+    const btnVars = document.getElementById('btn-show-vars');
+
+    function updateStatus() {
+      const configured = (typeof SupabaseStore !== 'undefined' && SupabaseStore.isConfigured());
+      const realtime = configured && !!SupabaseStore._realtimeStarted;
+      if (!statusEl) return;
+      if (!configured) statusEl.textContent = 'Local only';
+      else if (realtime) statusEl.textContent = 'Realtime';
+      else statusEl.textContent = 'Conectado (poll)';
+    }
+
+    if (btnForce) {
+      btnForce.addEventListener('click', async () => {
+        ind.classList.add('syncing');
+        try {
+          if (typeof SupabaseStore !== 'undefined' && typeof SupabaseStore.syncToLocal === 'function') {
+            await SupabaseStore.syncToLocal();
+            showToast('🔁 Sincronización forzada completada');
+          } else {
+            showToast('⚠️ Supabase no configurado');
+          }
+        } catch(e) {
+          console.warn('force sync error', e);
+          showToast('⚠️ Error al sincronizar');
+        } finally {
+          setTimeout(()=>ind.classList.remove('syncing'), 600);
+          updateStatus();
+        }
+      });
+    }
+
+    if (btnVars) {
+      btnVars.addEventListener('click', () => {
+        const url = window.SUPABASE_URL || (window.__SUPABASE && window.__SUPABASE.URL) || 'no definido';
+        const anon = window.SUPABASE_ANON_KEY || (window.__SUPABASE && window.__SUPABASE.ANON_KEY) || 'no definido';
+        console.log('SUPABASE_URL=', url);
+        console.log('SUPABASE_ANON_KEY=', anon);
+        alert('Revisa la consola del navegador para ver las variables Supabase.');
+      });
+    }
+
+    window.addEventListener('supabase:change', () => {
+      updateStatus();
+      showToast('🔔 Cambios detectados: UI actualizada');
+    });
+    window.addEventListener('supabase:sync', () => {
+      updateStatus();
+      // pequeño parpadeo
+      ind.classList.add('syncing');
+      setTimeout(()=>ind.classList.remove('syncing'), 600);
+    });
+
+    // Estado inicial
+    setTimeout(updateStatus, 500);
+  })();
 }
 // RENDERIZAR CATEGORÍAS EN LA BARRA DE FILTROS
 function renderCategories() {

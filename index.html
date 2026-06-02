@@ -278,6 +278,17 @@
   </div>
   <!-- FLOATING NOTIFICATION SYSTEM (TOAST) -->
   <div class="toast" id="toast"></div>
+  <!-- SYNC INDICATOR (DEBUG / STATUS) -->
+  <div id="sync-indicator" class="sync-indicator" aria-hidden="false">
+    <div class="si-inner">
+      <div class="si-dot"></div>
+      <div class="si-text"><strong>Sync:</strong> <span class="si-status">Inicializando...</span></div>
+      <div class="si-controls">
+        <button id="btn-sync-force" class="si-btn">Forzar</button>
+        <button id="btn-show-vars" class="si-btn">Vars</button>
+      </div>
+    </div>
+  </div>
   <!-- SCRIPTING -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
   <script src="js/supabase.js"></script>

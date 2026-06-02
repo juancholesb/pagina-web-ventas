@@ -1651,3 +1651,28 @@ body {
     display: none; /* Ocultar tags flotantes en móviles pequeños para evitar desbordes */
   }
 }
+
+/* ==========================================
+   SYNC INDICATOR (DEBUG / STATUS)
+   ========================================== */
+.sync-indicator {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 99999;
+  background: rgba(11,10,20,0.8);
+  border: 1px solid rgba(191,70,255,0.18);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: 12px;
+  box-shadow: var(--glow-purple);
+  backdrop-filter: blur(8px);
+  font-size: 0.85rem;
+}
+.sync-indicator .si-inner { display:flex; align-items:center; gap:10px; }
+.sync-indicator .si-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.08); box-shadow: 0 0 8px rgba(191,70,255,0.25); }
+.sync-indicator .si-status { color: var(--neon-cyan); font-weight:800; }
+.sync-indicator .si-controls { display:flex; gap:6px; margin-left:6px; }
+.si-btn { background: rgba(255,255,255,0.03); border:1px solid var(--border-neon); color:var(--text-main); padding:6px 8px; border-radius:8px; font-weight:700; cursor:pointer; }
+.sync-indicator.syncing { transform: scale(0.98); opacity:0.9; }
+
