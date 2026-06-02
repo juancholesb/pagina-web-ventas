@@ -243,6 +243,14 @@
               <textarea id="f-desc" rows="4" placeholder="Especificaciones técnicas, puffs, capacidad, etc..." required></textarea>
             </div>
             
+            <!-- PRODUCT VARIANTS -->
+            <div class="form-group full">
+              <label>Variantes del producto</label>
+              <div class="variants-wrap" id="variants-wrap">
+                <div class="variant-empty">Aún no hay variantes agregadas.</div>
+              </div>
+              <button type="button" class="btn-save" id="btn-add-variant" style="margin-top:12px;">➕ Agregar Variante</button>
+            </div>
           </div>
           <!-- PREVIEW CARD INTERACTIVO -->
           <div class="form-preview">
@@ -330,6 +338,8 @@
   <!-- FLOATING ADMIN TOAST SYSTEM -->
   <div class="admin-toast" id="admin-toast"></div>
   <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+  <script src="js/supabase.js"></script>
   <script src="js/products.js"></script>
   <script src="js/admin.js"></script>
 </body>

@@ -1,5 +1,9 @@
 // ===== CYBERPUNK STOREFRONT CONTROLLER =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (typeof ProductStore !== 'undefined' && typeof CategoryStore !== 'undefined') {
+    await ProductStore.init();
+    await CategoryStore.init();
+  }
   initSmokeCanvas();
   initCustomCursor();
   initHero3DInteraction();
@@ -333,7 +337,7 @@ function renderProducts(filterCategory = 'all') {
       <div class="pcard-body">
         <div class="pcard-cat">${p.category.toUpperCase()}</div>
         <h3 class="pcard-name">${p.name}</h3>
-        <p class="pcard-desc">${p.desc}</p>
+        <p class="pcard-desc">${p.description || p.desc || ''}</p>
         <div class="pcard-footer">
           <div class="pcard-prices">
             ${oldPriceHTML}
@@ -595,7 +599,7 @@ window.openProductDetail = function(productId) {
     <div class="modal-body">
       <span class="modal-cat">${p.category.toUpperCase()}</span>
       <h2 class="modal-name">${p.name}</h2>
-      <p class="modal-desc">${p.desc}</p>
+      <p class="modal-desc">${p.description || p.desc || ''}</p>
       
       <div class="modal-price">
         ${oldPriceHTML}

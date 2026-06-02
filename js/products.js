@@ -8,7 +8,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: 55000,
     emoji: "💨",
     img: null,
-    desc: "5000 puffs con diseño ultra estilizado, 13ml de líquido, batería recargable de 650mAh. Sabor intenso de fresa kiwi con un golpe helado.",
+    description: "5000 puffs con diseño ultra estilizado, 13ml de líquido, batería recargable de 650mAh. Sabor intenso de fresa kiwi con un golpe helado.",
     badge: "hot",
     badgeLabel: "HOT 🔥",
     stock: 30,
@@ -22,7 +22,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: null,
     emoji: "🌬️",
     img: null,
-    desc: "5000 puffs de sabor premium con resistencia de malla dual. Diseño ergonómico transparente con luz LED indicadora al inhalar.",
+    description: "5000 puffs de sabor premium con resistencia de malla dual. Diseño ergonómico transparente con luz LED indicadora al inhalar.",
     badge: "new",
     badgeLabel: "NUEVO ✨",
     stock: 25,
@@ -36,7 +36,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: 150000,
     emoji: "🔋",
     img: null,
-    desc: "El Pod System definitivo de 1000mAh. Cuenta con pantalla OLED futurista, potencia ajustable de 1-30W y control deslizante de flujo de aire premium.",
+    description: "El Pod System definitivo de 1000mAh. Cuenta con pantalla OLED futurista, potencia ajustable de 1-30W y control deslizante de flujo de aire premium.",
     badge: "sale",
     badgeLabel: "OFERTA ⚡",
     stock: 12,
@@ -50,7 +50,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: null,
     emoji: "🧪",
     img: null,
-    desc: "Sales de nicotina de 50mg/ml con sabor intenso a mango tropical y un toque de mentol refrescante. Perfectas para tus dispositivos pod.",
+    description: "Sales de nicotina de 50mg/ml con sabor intenso a mango tropical y un toque de mentol refrescante. Perfectas para tus dispositivos pod.",
     badge: null,
     badgeLabel: null,
     stock: 50,
@@ -64,7 +64,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: null,
     emoji: "⚡",
     img: null,
-    desc: "Hasta 80W de potencia pura, batería de 2000mAh integrada y pantalla digital a color. Excelente producción de vapor y compatibilidad con resistencias RPM3.",
+    description: "Hasta 80W de potencia pura, batería de 2000mAh integrada y pantalla digital a color. Excelente producción de vapor y compatibilidad con resistencias RPM3.",
     badge: null,
     badgeLabel: null,
     stock: 8,
@@ -78,7 +78,7 @@ const DEFAULT_PRODUCTS = [
     oldPrice: null,
     emoji: "🔧",
     img: null,
-    desc: "Pack de 5 resistencias de malla RPM3 de 0.15 ohmios. Diseñadas para una óptima transferencia de sabor y una densa nube de vapor.",
+    description: "Pack de 5 resistencias de malla RPM3 de 0.15 ohmios. Diseñadas para una óptima transferencia de sabor y una densa nube de vapor.",
     badge: null,
     badgeLabel: null,
     stock: 60,
@@ -92,47 +92,96 @@ const DEFAULT_CATEGORIES = [
   { id: "mod",        label: "Mods",         emoji: "⚙️" },
   { id: "accesorio",  label: "Accesorios",   emoji: "🔧" }
 ];
-// ===== STORE (ALMACÉN DE DATOS EN LOCALSTORAGE) =====
+// ===== STORE (ALMACÉN DE DATOS EN LOCALSTORAGE Y SINCRONIZACIÓN SUPABASE) =====
 const ProductStore = {
-  getAll() {
+  cache: null,
+
+  async init() {
+    if (this.cache) return this.cache;
+    if (SupabaseStore.isConfigured()) {
+      await SupabaseStore.syncToLocal();
+    }
+    this.cache = this.getAllLocal();
+    return this.cache;
+  },
+
+  getAllLocal() {
     try {
       const s = localStorage.getItem('cbflow_products');
-      if (s) return JSON.parse(s);
+      if (s) {
+        const products = JSON.parse(s);
+        return products.map(p => {
+          if (!p.description && p.desc) {
+            return { ...p, description: p.desc };
+          }
+          return p;
+        });
+      }
     } catch(e) {}
-    // Si no hay datos, inicializamos con los por defecto y los guardamos
     this.save(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
+
+  getAll() {
+    return this.cache || this.getAllLocal();
+  },
+
   save(p) {
+    this.cache = p;
     try {
       localStorage.setItem('cbflow_products', JSON.stringify(p));
     } catch(e) {}
   },
+
   nextId() {
     const p = this.getAll();
     return p.length ? Math.max(...p.map(x => x.id)) + 1 : 1;
   },
+
   add(p) {
     const all = this.getAll();
     p.id = this.nextId();
     all.push(p);
     this.save(all);
+    if (SupabaseStore.isConfigured()) {
+      SupabaseStore.saveProduct(p);
+    }
     return p;
   },
+
   update(id, data) {
     const all = this.getAll();
     const i = all.findIndex(p => p.id === id);
     if (i !== -1) {
       all[i] = { ...all[i], ...data };
       this.save(all);
+      if (SupabaseStore.isConfigured()) {
+        SupabaseStore.saveProduct(all[i]);
+      }
     }
   },
+
   delete(id) {
-    this.save(this.getAll().filter(p => p.id !== id));
+    const remaining = this.getAll().filter(p => p.id !== id);
+    this.save(remaining);
+    if (SupabaseStore.isConfigured()) {
+      SupabaseStore.deleteProduct(id);
+    }
   }
 };
 const CategoryStore = {
-  getAll() {
+  cache: null,
+
+  async init() {
+    if (this.cache) return this.cache;
+    if (SupabaseStore.isConfigured()) {
+      await SupabaseStore.syncToLocal();
+    }
+    this.cache = this.getAllLocal();
+    return this.cache;
+  },
+
+  getAllLocal() {
     try {
       const s = localStorage.getItem('cbflow_cats');
       if (s) return JSON.parse(s);
@@ -140,11 +189,18 @@ const CategoryStore = {
     this.save(DEFAULT_CATEGORIES);
     return DEFAULT_CATEGORIES;
   },
+
+  getAll() {
+    return this.cache || this.getAllLocal();
+  },
+
   save(c) {
+    this.cache = c;
     try {
       localStorage.setItem('cbflow_cats', JSON.stringify(c));
     } catch(e) {}
   },
+
   add(c) {
     const all = this.getAll();
     if (!all.find(x => x.id === c.id)) {
@@ -152,6 +208,7 @@ const CategoryStore = {
       this.save(all);
     }
   },
+
   delete(id) {
     this.save(this.getAll().filter(c => c.id !== id));
   }

@@ -1,5 +1,7 @@
 // ===== CYBER CONTROL CENTER - ADMIN CONTROLLER =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await ProductStore.init();
+  await CategoryStore.init();
   initAdminCanvas();
   initAdminAuth();
 });
@@ -427,10 +429,105 @@ if (confYes) {
 // ==========================================
 let editingProductId = null;
 let currentUploadedImageBase64 = null;
+let currentVariants = [];
 function setupProductForm() {
   const fCat = document.getElementById('f-cat');
-  
-  // Live preview bindings
+  const variantsWrap = document.getElementById('variants-wrap');
+  const btnAddVariant = document.getElementById('btn-add-variant');
+
+  const escapeHtml = value => String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  async function fillCategorySelect() {
+    if (!fCat) return;
+    const categories = CategoryStore.getAll();
+    fCat.innerHTML = `<option value="">Selecciona...</option>`;
+    categories.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = `${c.emoji} ${c.label}`;
+      fCat.appendChild(opt);
+    });
+  }
+
+  function renderVariantsList() {
+    if (!variantsWrap) return;
+    if (!currentVariants.length) {
+      variantsWrap.innerHTML = `<div class="variant-empty">Aún no hay variantes agregadas.</div>`;
+      return;
+    }
+
+    variantsWrap.innerHTML = currentVariants.map((variant, index) => `
+      <div class="variant-card" data-variant-id="${variant.tempId}">
+        <div class="variant-actions">
+          <h4>Variante ${index + 1}</h4>
+          <button type="button" class="btn-cancel variant-remove" data-variant-id="${variant.tempId}">Eliminar</button>
+        </div>
+        <div class="variant-grid">
+          <div class="form-group">
+            <label>Nombre variante</label>
+            <input type="text" data-variant-field="name" data-variant-id="${variant.tempId}" value="${escapeHtml(variant.name)}" placeholder="Ej: Mango Ice 5000" />
+          </div>
+          <div class="form-group">
+            <label>Precio</label>
+            <input type="number" min="0" data-variant-field="price" data-variant-id="${variant.tempId}" value="${variant.price || ''}" placeholder="45000" />
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input type="number" min="0" data-variant-field="stock" data-variant-id="${variant.tempId}" value="${variant.stock || ''}" placeholder="10" />
+          </div>
+          <div class="form-group">
+            <label>Descripción variante</label>
+            <textarea data-variant-field="note" data-variant-id="${variant.tempId}" rows="2" placeholder="Notas opcionales">${escapeHtml(variant.note)}</textarea>
+          </div>
+        </div>
+        <div class="variant-actions">
+          <button type="button" class="btn-save variant-pick-img" data-variant-id="${variant.tempId}">Cargar Foto</button>
+          <input type="file" accept="image/*" class="variant-file-input" data-variant-id="${variant.tempId}" style="display:none" />
+        </div>
+        ${variant.img ? `<img src="${variant.img}" class="variant-image-preview" alt="Variante" />` : ''}
+      </div>
+    `).join('');
+  }
+  window.renderVariantsList = renderVariantsList;
+
+  function addNewVariant() {
+    currentVariants.push({
+      tempId: `v_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+      name: '',
+      price: '',
+      stock: '',
+      img: null,
+      note: ''
+    });
+    renderVariantsList();
+  }
+
+  function updateVariantField(id, field, value) {
+    const variant = currentVariants.find(v => v.tempId === id);
+    if (!variant) return;
+    if (field === 'price' || field === 'stock') {
+      variant[field] = value === '' ? '' : Number(value);
+    } else {
+      variant[field] = value;
+    }
+  }
+
+  function removeVariant(id) {
+    currentVariants = currentVariants.filter(v => v.tempId !== id);
+    renderVariantsList();
+  }
+
+  function processVariantFile(file, id) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const variant = currentVariants.find(v => v.tempId === id);
+      if (!variant) return;
+      variant.img = e.target.result;
+      renderVariantsList();
+    };
+    reader.readAsDataURL(file);
+  }
+
   const updateLivePreview = () => {
     const name = document.getElementById('f-name').value.trim() || 'Nombre del producto';
     const price = document.getElementById('f-price').value ? `$${Number(document.getElementById('f-price').value).toLocaleString('es-CO')} COP` : '$0';
@@ -493,6 +590,44 @@ function setupProductForm() {
     });
   }
   
+  if (variantsWrap) {
+    variantsWrap.addEventListener('click', e => {
+      const removeBtn = e.target.closest('.variant-remove');
+      if (removeBtn) {
+        removeVariant(removeBtn.dataset.variantId);
+        return;
+      }
+
+      const pickBtn = e.target.closest('.variant-pick-img');
+      if (pickBtn) {
+        const id = pickBtn.dataset.variantId;
+        const fileInput = variantsWrap.querySelector(`input.variant-file-input[data-variant-id="${id}"]`);
+        if (fileInput) fileInput.click();
+      }
+    });
+
+    variantsWrap.addEventListener('change', e => {
+      const input = e.target;
+      if (input.classList.contains('variant-file-input')) {
+        const id = input.dataset.variantId;
+        if (input.files && input.files[0]) {
+          processVariantFile(input.files[0], id);
+        }
+      }
+      const field = input.dataset.variantField;
+      if (field) {
+        updateVariantField(input.dataset.variantId, field, input.value);
+      }
+    });
+  }
+
+  if (btnAddVariant) {
+    btnAddVariant.addEventListener('click', addNewVariant);
+  }
+
+  fillCategorySelect();
+  renderVariantsList();
+  
   function processFile(file) {
     const reader = new FileReader();
     reader.onload = e => {
@@ -545,12 +680,19 @@ function setupProductForm() {
       const oldPrice = Number(document.getElementById('f-oldprice').value) || null;
       const stock = Number(document.getElementById('f-stock').value);
       const badge = document.getElementById('f-badge').value || null;
-      const desc = document.getElementById('f-desc').value.trim();
+      const description = document.getElementById('f-desc').value.trim();
       const featured = document.getElementById('f-featured') ? document.getElementById('f-featured').checked : false;
       
-      if (!name || !category || !price || isNaN(price) || isNaN(stock) || !desc) {
+      if (!name || !category || !price || isNaN(price) || isNaN(stock) || !description) {
         showFormFeedback('⚠️ Por favor completa todos los campos obligatorios.', 'error');
         return;
+      }
+      
+      for (const variant of currentVariants) {
+        if (!variant.name || !variant.price || isNaN(variant.price) || isNaN(variant.stock)) {
+          showFormFeedback('⚠️ Cada variante debe tener nombre, precio y stock.', 'error');
+          return;
+        }
       }
       
       const badgeLabels = { new: "NUEVO ✨", sale: "OFERTA ⚡", hot: "HOT 🔥" };
@@ -563,9 +705,17 @@ function setupProductForm() {
         stock,
         badge,
         badgeLabel: badge ? badgeLabels[badge] : null,
-        desc,
+        description,
         featured,
-        img: currentUploadedImageBase64
+        img: currentUploadedImageBase64,
+        variants: currentVariants.map(v => ({
+          id: v.id,
+          name: v.name,
+          price: Number(v.price),
+          stock: Number(v.stock),
+          img: v.img,
+          note: v.note || ''
+        }))
       };
       
       if (editingProductId !== null) {
@@ -595,6 +745,10 @@ function setupProductForm() {
 function resetProductForm() {
   editingProductId = null;
   currentUploadedImageBase64 = null;
+  currentVariants = [];
+  if (typeof renderVariantsList === 'function') {
+    renderVariantsList();
+  }
   
   ['f-name', 'f-emoji', 'f-price', 'f-oldprice', 'f-stock', 'f-desc'].forEach(id => {
     const el = document.getElementById(id);
@@ -649,7 +803,7 @@ window.editProduct = function(id) {
   document.getElementById('f-price').value = p.price;
   document.getElementById('f-oldprice').value = p.oldPrice || '';
   document.getElementById('f-stock').value = p.stock;
-  document.getElementById('f-desc').value = p.desc;
+  document.getElementById('f-desc').value = p.description || p.desc || '';
   
   // Llenar selects dinámicos
   // Cargar categorías en formulario si es necesario
@@ -670,6 +824,17 @@ window.editProduct = function(id) {
   
   const fFeat = document.getElementById('f-featured');
   if (fFeat) fFeat.checked = p.featured || false;
+  
+  currentVariants = Array.isArray(p.variants) ? p.variants.map(v => ({
+    tempId: v.id ? `v_${v.id}` : `v_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+    id: v.id,
+    name: v.name || '',
+    price: v.price || '',
+    stock: v.stock || '',
+    img: v.img || null,
+    note: v.note || ''
+  })) : [];
+  renderVariantsList();
   
   // Cargar imagen de edición
   const imgResult = document.getElementById('img-result');
@@ -720,6 +885,8 @@ const addTabBtn = document.querySelector('.si[data-tab="add"]');
 if (addTabBtn) {
   addTabBtn.addEventListener('click', () => {
     resetProductForm();
+    currentVariants = [];
+    renderVariantsList();
     const fCat = document.getElementById('f-cat');
     const categories = CategoryStore.getAll();
     fCat.innerHTML = `<option value="">Selecciona...</option>`;
