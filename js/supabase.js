@@ -1,6 +1,7 @@
-// Configuración de Supabase
-const SUPABASE_URL = 'https://kwjvztmmnhphxfzlzmxe.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3anZ6dG1tbmhwaHhmemx6bXhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNTU3NDgsImV4cCI6MjA5NTkzMTc0OH0.2RZf386cG2x2qWoSFhcYmEFu5JHEQ8CD_q4sY62n_z4';
+// Configuración de Supabase (usa variables globales si están definidas por el host)
+// En Vercel puedes inyectar `SUPABASE_URL` y `SUPABASE_ANON_KEY` en el build y exponerlas
+const SUPABASE_URL = (typeof window !== 'undefined' && (window.SUPABASE_URL || (window.__SUPABASE && window.__SUPABASE.URL))) || 'https://kwjvztmmnhphxfzlzmxe.supabase.co';
+const SUPABASE_ANON_KEY = (typeof window !== 'undefined' && (window.SUPABASE_ANON_KEY || (window.__SUPABASE && window.__SUPABASE.ANON_KEY))) || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3anZ6dG1tbmhwaHhmemx6bXhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNTU3NDgsImV4cCI6MjA5NTkzMTc0OH0.2RZf386cG2x2qWoSFhcYmEFu5JHEQ8CD_q4sY62n_z4';
 
 const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_ID'))
   ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)

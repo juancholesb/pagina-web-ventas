@@ -10,4 +10,8 @@
     "ventas",
     "responsive"
   ]
+  ,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.32.0"
+  }
 }

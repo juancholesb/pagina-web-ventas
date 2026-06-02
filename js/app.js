@@ -525,19 +525,46 @@ function getActiveProductFilter() {
   return activeBtn ? activeBtn.dataset.filter : 'all';
 }
 
-function decrementStockAfterCheckout() {
+async function decrementStockAfterCheckout() {
   const currentFilter = getActiveProductFilter();
-  cart.forEach(item => {
-    const product = ProductStore.getAll().find(p => p.id === item.id);
-    if (!product) return;
-    const newStock = Math.max(0, product.stock - item.qty);
-    ProductStore.update(product.id, { stock: newStock });
-  });
-  renderProducts(currentFilter);
+  if (!cart || cart.length === 0) return;
+
+  try {
+    const payload = { items: cart.map(i => ({ id: i.id, qty: i.qty })) };
+    const resp = await fetch('/api/update-stock', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!resp.ok) {
+      console.warn('Server update-stock failed', await resp.text());
+      // Fallback: actualizar localmente
+      cart.forEach(item => {
+        const product = ProductStore.getAll().find(p => p.id === item.id);
+        if (!product) return;
+        const newStock = Math.max(0, product.stock - item.qty);
+        ProductStore.update(product.id, { stock: newStock });
+      });
+      renderProducts(currentFilter);
+      return;
+    }
+
+    const data = await resp.json();
+    // data.updated => [{id, stock}]
+    if (Array.isArray(data.updated)) {
+      data.updated.forEach(u => {
+        ProductStore.update(u.id, { stock: u.stock });
+      });
+    }
+    renderProducts(currentFilter);
+  } catch (e) {
+    console.warn('Error updating stock on server', e);
+  }
 }
 
 // PROCESAR COMPRA Y ENVIAR WHATSAPP
-function processCheckout() {
+async function processCheckout() {
   const name = document.getElementById('cn-name').value.trim();
   const phone = document.getElementById('cn-phone').value.trim();
   const address = document.getElementById('cn-address').value.trim();
@@ -569,8 +596,8 @@ function processCheckout() {
   const waNumber = "573052267408";
   const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
   
-  // Reducir stock antes de limpiar el carrito
-  decrementStockAfterCheckout();
+  // Reducir stock antes de limpiar el carrito (esperar respuesta)
+  await decrementStockAfterCheckout();
 
   // Abrir ventana e indicar éxito
   window.open(url, '_blank');
