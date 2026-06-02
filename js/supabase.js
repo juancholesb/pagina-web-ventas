@@ -80,7 +80,8 @@ const SupabaseStore = {
   // Iniciar suscripciones en tiempo real para mantener clientes sincronizados
   startRealtime() {
     if (!this.isConfigured() || this._realtimeStarted) return;
-    this._realtimeStarted = true;
+    // Detener cualquier polling previo antes de iniciar realtime
+    if (this._pollHandle) this.stopPolling();
 
     const onChange = (payload) => {
       try {
@@ -101,8 +102,35 @@ const SupabaseStore = {
         .on('postgres_changes', { event: '*', schema: 'public', table: 'variants' }, onChange)
         .on('postgres_changes', { event: '*', schema: 'public', table: 'categories' }, onChange)
         .subscribe();
+      // Marcar realtime como iniciado si llegamos hasta aquí
+      this._realtimeStarted = true;
     } catch (err) {
       console.warn('Supabase realtime subscribe failed:', err && err.message ? err.message : err);
+      // Si falla, iniciar polling como fallback
+      try { this.startPolling(15000); } catch (e) {}
+    }
+  },
+
+  startPolling(intervalMs = 15000) {
+    if (!this.isConfigured()) return;
+    if (this._pollHandle) return; // ya en polling
+    this._pollHandle = setInterval(async () => {
+      try {
+        await this.syncToLocal();
+        window.dispatchEvent(new Event('supabase:sync'));
+        console.debug('Supabase polling: sync completed');
+      } catch (e) {
+        console.warn('Supabase polling error', e);
+      }
+    }, intervalMs);
+    console.info('Supabase polling started', intervalMs);
+  },
+
+  stopPolling() {
+    if (this._pollHandle) {
+      clearInterval(this._pollHandle);
+      this._pollHandle = null;
+      console.info('Supabase polling stopped');
     }
   },
 

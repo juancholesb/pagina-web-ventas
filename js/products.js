@@ -104,6 +104,10 @@ const ProductStore = {
       if (typeof SupabaseStore.startRealtime === 'function') {
         SupabaseStore.startRealtime();
       }
+      // Si realtime no quedó activo, arrancar polling como fallback
+      if (!SupabaseStore._realtimeStarted && typeof SupabaseStore.startPolling === 'function') {
+        SupabaseStore.startPolling(15000); // cada 15s
+      }
     }
     this.cache = this.getAllLocal();
     return this.cache;
